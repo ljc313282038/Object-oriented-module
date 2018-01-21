@@ -2,29 +2,30 @@
 大话西游记解说面向设计模式
 
 # 基本模式
-
-var people = new Object();\<br>
-people.name = "悟空";\<br>
-people.weapon = "金箍棒";\<br>
-people.run = function() {\<br>
+``` javascript
+var people = new Object();
+people.name = "悟空";
+people.weapon = "金箍棒";
+people.run = function() {
     return this.name + "的武器是" + this.weapon\<br>
-};\<br>
-console.log(people.name);\<br>
-console.log(people.run());\<br>
-//缺点：\<br>
-//如果我需要设置多个对象是不是需要重新new Object()\<br>
-//如果有100个是不是需要new 100次？显然不是这样！\<br>\<br>
+};
+console.log(people.name);
+console.log(people.run());
+```
+//缺点：
+//如果我需要设置多个对象是不是需要重新new Object()
+//如果有100个是不是需要new 100次？显然不是这样！
 
 # 工厂模式
-function creatPeople(name, weapon) {\<br>
-    var people = new Object();\<br>
-    people.name = name;\<br>
-    people.weapon = weapon;\<br>
-    people.run = function() {\<br>
+function creatPeople(name, weapon) {
+    var people = new Object();
+    people.name = name;>
+    people.weapon = weapon;>
+    people.run = function() {
         return this.name + "的武器是" + this.weapon\<br>
-    };\<br>
+    };
 
-    return people //返回对象\<br>
+    return people //返回对象
 }
 var bajie = creatPeople("八戒", "钉耙");
 console.log(bajie.name);
