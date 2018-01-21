@@ -12,11 +12,12 @@ people.run = function() {
 console.log(people.name);
 console.log(people.run());
 ```
-//缺点：
-//如果我需要设置多个对象是不是需要重新new Object()
-//如果有100个是不是需要new 100次？显然不是这样！
+## 缺点：
+* 如果我需要设置多个对象是不是需要重新new Object()
+* 如果有100个是不是需要new 100次？显然不是这样！
 
 # 工厂模式
+``` javascript
 function creatPeople(name, weapon) {
     var people = new Object();
     people.name = name;>
@@ -30,14 +31,15 @@ function creatPeople(name, weapon) {
 var bajie = creatPeople("八戒", "钉耙");
 console.log(bajie.name);
 console.log(bajie.run());
-//缺点:
-//创建对象没有使用new 关键字，对象和实例没有联系
-//造成资源浪费，每次穿创建对象那个多要增加重复的内容
-//即两个实例的地址是不同的 不同的对象会占用两个地址（堆）空间的内存
+```
+## 缺点:
+* 创建对象没有使用new 关键字，对象和实例没有联系
+* 造成资源浪费，每次穿创建对象那个多要增加重复的内容
+* 即两个实例的地址是不同的 不同的对象会占用两个地址（堆）空间的内存
 
 
 # 构造函数模式
-
+``` javascript
 var creatPeople2 = function(name, weapon) {
     this.name = name;
     this.weapon = weapon;
@@ -57,9 +59,9 @@ var yudi = new creatPeople2("玉皇大帝", "很厉害");
 var zhangyouren = new creatPeople2("玉皇大帝", "很厉害");
 console.log(zhangyouren.run(), yudi.run()); //看起来一样哦！下面我们来看看是否相等？
 console.log(yudi.run == zhangyouren.run); //呀！false 这里不相等 ，说明两个实例地址不同  
-
-//call apply使用介绍
-
+```
+### call apply使用介绍
+``` javascript
 //创建一个新的对象那个
 var baigujing = new Object();
 var tieshangongzhu = new Object();
@@ -71,13 +73,13 @@ creatPeople2.call(baigujing, "白骨精", "爪子"); //这里call 将this指向c
 creatPeople2.apply(tieshangongzhu, ["铁扇公主", "铁扇"]); //这里apply 将this指向creatPeople2的this 传参方式不同上
 console.log(baigujing.run());
 console.log(tieshangongzhu.run());
+```
+## 缺点：
+* 构造函数最明显的缺点就是，每个方法都要在每个实例上重新创建一遍。wujing.run和bailongma.run无法共享this
+* 如何让实共享this呢？且看下面
 
-//缺点：
-//构造函数最明显的缺点就是，每个方法都要在每个实例上重新创建一遍。wujing.run和bailongma.run无法共享this
-//如何让实共享this呢？且看下面
-
-//prototype(与构造函数组合) 模式
-
+# prototype(与构造函数组合) 模式
+``` javascript
 //陈塘关李家
 var chentanguanlijia = function(name, weapon) {
     this.name = name;
@@ -105,11 +107,12 @@ console.log(litianwang.zuxian === nezha.zuxian); //true  哈哈他们共同用�
 console.log(litianwang.constructor);
 //看一看litianwang nezha是不是同一个构造函数创建的
 console.log(litianwang.constructor == nezha.constructor); //true
-
-//缺点： 
-//在日常使用中已经是比较好的方法了，但是他的构造函数和原型是分开的看起来不好，不能体现封装性！
+```
+## 缺点： 
+* 在日常使用中已经是比较好的方法了，但是他的构造函数和原型是分开的看起来不好，不能体现封装性！
 
 # 动态原型模式
+``` javascript
 //很简单就是把原型写在构造函数里面
 
 //陈塘关李家2——动态原型模式
@@ -133,3 +136,4 @@ var litianwang_dtyx = new chentanguanlijia_dtyx("托塔李天王——动态原�
 var nezha_dtyx = new chentanguanlijia_dtyx("哪吒——动态原型模式", "风火轮——动态原型模式");
 console.log(litianwang_dtyx.run());//生的儿子都姓李——动态原型模式
 console.log(nezha_dtyx.run());//生的儿子都姓李——动态原型模式
+```
